@@ -1,0 +1,64 @@
+ #Application information
+spring:
+  application:
+    name: "@project.name@"
+  profiles:
+    active: local
+
+  # Database Configuration
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    hikari:
+      connection-timeout: 30000
+      validation-timeout: 5000
+      idle-timeout: 300000
+      max-lifetime: 600000
+      minimum-idle: 2
+
+  # JPA Configuration
+  jpa:
+    hibernate:
+      ddl-auto: ${DDL_AUTO:validate}
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        jdbc:
+          time_zone: Asia/Kolkata
+          batch_versioned_data: true
+        format_sql: false
+        use_sql_comments: false
+        generate_statistics: false
+        order_inserts: true
+        order_updates: true
+    open-in-view: false
+    show-sql: false
+    defer-datasource-initialization: false
+
+# Application Configuration
+application:
+  version: "@project.version@"
+
+# Timezone Configuration - Strictly IST
+user:
+  timezone: Asia/Kolkata
+
+# Swagger/OpenAPI Configuration
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    try-it-out-enabled: true
+    filter: true
+    doc-expansion: none
+    use-root-path: true
+  default-produces-media-type: application/json
+  default-consumes-media-type: application/json
+
+# Server Configuration
+server:
+  port: 8080

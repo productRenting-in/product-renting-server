@@ -21,4 +21,10 @@ public class ProductControllerImpl implements ProductController {
         List<ProductResponse> response = productService.getAll();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<ProductResponse> addProduct(ProductResponse productResponse) {
+        ProductResponse savedProductResponse = productService.addProduct(productResponse);
+        return new ResponseEntity<>(savedProductResponse, HttpStatus.OK);
+    }
 }

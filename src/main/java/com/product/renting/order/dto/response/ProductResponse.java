@@ -1,5 +1,6 @@
 package com.product.renting.order.dto.response;
 
+import com.product.renting.order.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,5 +16,7 @@ public class ProductResponse {
     private UUID productId;
     private String productName;
     private String productDescription;
-    private String productPricePerDay;
+    private double productPrice;
+    private int stock;
+    private Category category;
 }

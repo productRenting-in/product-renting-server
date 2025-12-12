@@ -16,4 +16,6 @@ public interface ProductDao {
      * @return A list of all products
      */
     List<Product> getAll();
+
+    Product addProduct(Product product);
 }

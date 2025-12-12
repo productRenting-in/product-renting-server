@@ -24,4 +24,12 @@ public class ProductServiceImpl implements ProductService {
         List<Product> productList = productDao.getAll();
         return productMapper.toProductResponseList(productList);
     }
+
+    @Override
+    public ProductResponse addProduct(ProductResponse productResponse) {
+        Product product = productMapper.toProduct(productResponse);
+        Product savedProduct = productDao.addProduct(product);
+        return productMapper.toProductResponse(savedProduct);
+    }
+
 }

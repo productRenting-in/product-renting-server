@@ -27,10 +27,12 @@ public class Product {
     @Column(name = DbConstants.PRODUCT_DESCRIPTION)
     private String productDescription;
 
-    @Column(name = DbConstants.PRODUCT_PRICE_PER_DAY)
-    private String productPricePerDay;
+    @Column(name = DbConstants.PRODUCT_PRICE)
+    private double productPrice;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = DbConstants.CATEGORY_ID)
-//    private Category category;
+    private int stock;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = DbConstants.CATEGORY_ID)
+    private Category category;
 }

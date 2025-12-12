@@ -25,4 +25,6 @@ public interface ProductMapper {
      * @return the converted AreaUnit response list
      */
     List<ProductResponse> toProductResponseList(List<Product> entityList);
+
+    Product toProduct(ProductResponse response);
 }

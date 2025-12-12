@@ -24,4 +24,9 @@ public class ProductDaoImpl implements ProductDao {
         log.debug("DAO - Found {} products", products.size());
         return products;
     }
+
+    @Override
+    public Product addProduct(Product product) {
+        return productRepository.save(product);
+    }
 }

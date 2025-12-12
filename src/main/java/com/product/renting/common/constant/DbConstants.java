@@ -15,6 +15,6 @@ public class DbConstants {
     public static final String PRODUCT_ID = "product_id";
     public static final String PRODUCT_NAME = "product_name";
     public static final String PRODUCT_DESCRIPTION = "product_description";
-    public static final String PRODUCT_PRICE_PER_DAY = "product_price_per_day";
+    public static final String PRODUCT_PRICE = "product_price";
 
 }

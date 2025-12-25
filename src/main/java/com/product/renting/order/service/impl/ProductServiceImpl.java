@@ -1,6 +1,7 @@
 package com.product.renting.order.service.impl;
 
 import com.product.renting.order.dao.ProductDao;
+import com.product.renting.order.dto.request.ProductRequest;
 import com.product.renting.order.dto.response.ProductResponse;
 import com.product.renting.order.entity.Product;
 import com.product.renting.order.mapper.ProductMapper;
@@ -22,14 +23,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductResponse> getAll() {
         List<Product> productList = productDao.getAll();
-        return productMapper.toProductResponseList(productList);
+        return productMapper.toResponses(productList);
     }
 
     @Override
-    public ProductResponse addProduct(ProductResponse productResponse) {
-        Product product = productMapper.toProduct(productResponse);
-        Product savedProduct = productDao.addProduct(product);
-        return productMapper.toProductResponse(savedProduct);
+    public ProductResponse addProduct(ProductRequest productRequest) {
+        Product product = productMapper.toEntity(productRequest);
+        Product savedProduct = productDao.create(product);
+        return productMapper.toResponse(savedProduct);
     }
 
 }

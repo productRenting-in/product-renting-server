@@ -1,6 +1,7 @@
 package com.product.renting.order.controller.impl;
 
 import com.product.renting.order.controller.ProductController;
+import com.product.renting.order.dto.request.ProductRequest;
 import com.product.renting.order.dto.response.ProductResponse;
 import com.product.renting.order.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,8 @@ public class ProductControllerImpl implements ProductController {
     }
 
     @Override
-    public ResponseEntity<ProductResponse> addProduct(ProductResponse productResponse) {
-        ProductResponse savedProductResponse = productService.addProduct(productResponse);
+    public ResponseEntity<ProductResponse> addProduct(ProductRequest productRequest) {
+        ProductResponse savedProductResponse = productService.addProduct(productRequest);
         return new ResponseEntity<>(savedProductResponse, HttpStatus.OK);
     }
 }

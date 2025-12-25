@@ -1,6 +1,5 @@
 package com.product.renting.order.dto.response;
 
-import com.product.renting.order.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,9 +11,10 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductResponse {
-    private UUID productId;
-    private String productName;
-    private String productDescription;
-    private Category category;
+public class CategoryResponse {
+
+    private UUID categoryId;
+    private String categoryName;
+    private String categoryDescription;
+    private String categorySlug;
 }

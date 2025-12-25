@@ -26,7 +26,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public Product addProduct(Product product) {
+    public Product create(Product product) {
         return productRepository.save(product);
     }
 }

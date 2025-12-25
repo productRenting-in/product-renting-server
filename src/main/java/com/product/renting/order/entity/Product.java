@@ -1,11 +1,9 @@
 package com.product.renting.order.entity;
 
 import com.product.renting.common.constant.DbConstants;
+import com.product.renting.common.entity.Auditable;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -14,7 +12,9 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
+@EqualsAndHashCode(callSuper = true)
+@Table(name = DbConstants.PRODUCT)
+public class Product extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -26,11 +26,6 @@ public class Product {
 
     @Column(name = DbConstants.PRODUCT_DESCRIPTION)
     private String productDescription;
-
-    @Column(name = DbConstants.PRODUCT_PRICE)
-    private double productPrice;
-
-    private int stock;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = DbConstants.CATEGORY_ID)

@@ -17,5 +17,10 @@ public interface ProductDao {
      */
     List<Product> getAll();
 
-    Product addProduct(Product product);
+    /**
+     * Create a new product
+     *
+     * @return the created Product
+     */
+    Product create(Product product);
 }

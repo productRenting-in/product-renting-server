@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 public abstract class Auditable {
 
     @CreatedDate
-    @Column(name = DbConstants.CREATED_ON, nullable = false, updatable = false)
+    @Column(name = DbConstants.CREATED_ON, updatable = false)
     private LocalDateTime createdOn;
 
     @LastModifiedDate

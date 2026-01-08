@@ -3,6 +3,7 @@ package com.product.renting.order.dao;
 import com.product.renting.order.entity.Product;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Data Access Object interface for Product entity.
@@ -23,4 +24,13 @@ public interface ProductDao {
      * @return the created Product
      */
     Product create(Product product);
+
+    boolean existsByProductName(String productName);
+
+    Product save(Product product);
+
+
+    List<Object[]> findAllWithActivePricing();
+
+    List<Object[]> findByCategoryWithActivePricing(UUID categoryId);
 }

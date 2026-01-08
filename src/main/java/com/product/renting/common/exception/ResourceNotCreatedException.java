@@ -1,5 +1,8 @@
 package com.product.renting.common.exception;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 public class ResourceNotCreatedException extends RuntimeException {
 
     public ResourceNotCreatedException() {

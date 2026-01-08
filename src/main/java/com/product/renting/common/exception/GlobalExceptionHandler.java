@@ -109,6 +109,28 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Handle DuplicateResourceException
+     */
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ResponseEntity<ApiErrorResponse> handleDuplicateResourceException(
+            DuplicateResourceException ex,
+            WebRequest request) {
+
+        setupMDC();
+        log.error("DUPLICATE_RESOURCE : {}", ex.getMessage(), ex);
+
+        ApiErrorResponse errorResponse = ErrorResponseBuilder.createErrorResponse(
+                HttpStatus.CONFLICT, // 409 is best for duplicate/uniqueness violations
+                ex.getMessage() != null
+                        ? ex.getMessage()
+                        : "Resource already exists",
+                request
+        );
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
+    /**
      * Handle method argument validation errors.
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)

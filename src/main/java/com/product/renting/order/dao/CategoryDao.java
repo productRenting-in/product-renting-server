@@ -3,6 +3,7 @@ package com.product.renting.order.dao;
 import com.product.renting.order.entity.Category;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -38,4 +39,8 @@ public interface CategoryDao {
      * @return the existing category
      */
     Category getByIdOrThrow(UUID categoryId);
+
+    Optional<Category> getCategoryById(UUID categoryId);
+
+    boolean categoryExistsBySlug(String categorySlug);
 }

@@ -5,6 +5,8 @@ import com.product.renting.common.entity.Auditable;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -27,7 +29,10 @@ public class Product extends Auditable {
     @Column(name = DbConstants.PRODUCT_DESCRIPTION)
     private String productDescription;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = DbConstants.CATEGORY_ID)
     private Category category;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductPricing> pricingList = new ArrayList<>();
 }

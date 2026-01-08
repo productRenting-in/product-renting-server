@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,6 +21,12 @@ public class ProductControllerImpl implements ProductController {
     @Override
     public ResponseEntity<List<ProductResponse>> getAll() {
         List<ProductResponse> response = productService.getAll();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<List<ProductResponse>> getProductsByCategory(UUID categoryId) {
+        List<ProductResponse> response = productService.getProductsByCategory(categoryId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

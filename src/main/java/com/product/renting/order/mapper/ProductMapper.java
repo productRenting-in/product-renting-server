@@ -4,7 +4,9 @@ import com.product.renting.common.config.MapstructMapperConfig;
 import com.product.renting.order.dto.request.ProductRequest;
 import com.product.renting.order.dto.response.ProductResponse;
 import com.product.renting.order.entity.Product;
+import com.product.renting.order.entity.ProductPricing;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
@@ -18,6 +20,16 @@ public interface ProductMapper {
      * @return the converted Product response
      */
     ProductResponse toResponse(Product entity);
+
+    @Mapping(source = "product.productId", target = "productId")
+    @Mapping(source = "product.productName", target = "productName")
+    @Mapping(source = "product.productDescription", target = "productDescription")
+    @Mapping(source = "product.category", target = "category")
+    // Map pricing fields from the second parameter
+    @Mapping(source = "pricing.pricePerDay", target = "pricePerDay")
+    @Mapping(source = "pricing.pricePerWeek", target = "pricePerWeek")
+    @Mapping(source = "pricing.pricePerMonth", target = "pricePerMonth")
+    ProductResponse toResponse(Product product, ProductPricing pricing);
 
     /**
      * Converts a list of Product entity to a Product response list.

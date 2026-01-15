@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Repository
@@ -28,5 +29,29 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public Product create(Product product) {
         return productRepository.save(product);
+    }
+
+    @Override
+    public boolean existsByProductName(String productName) {
+        log.debug("DAO - Checking if product exists by productName {}", productName);
+        return productRepository.existsByProductNameIgnoreCase(productName);
+    }
+
+    @Override
+    public Product save(Product product) {
+        log.debug("DAO - Saving product {}", product);
+        Product savedProduct = productRepository.save(product);
+        log.debug("DAO - Saved product {}", savedProduct);
+        return savedProduct;
+    }
+
+    @Override
+    public List<Object[]> findAllWithActivePricing() {
+        return productRepository.findAllWithActivePricing();
+    }
+
+    @Override
+    public List<Object[]> findByCategoryWithActivePricing(UUID categoryId) {
+        return productRepository.findByCategoryWithActivePricing(categoryId);
     }
 }

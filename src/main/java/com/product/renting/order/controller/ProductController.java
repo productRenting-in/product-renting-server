@@ -13,12 +13,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Validated
 @Tag(name = "Product Management", description = "APIs for managing Product")
@@ -32,6 +30,14 @@ public interface ProductController extends BaseController {
     })
     @GetMapping
     ResponseEntity<List<ProductResponse>> getAll();
+
+    @Operation(summary = "Get all Products By Category")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Products found by category",
+                    content = @Content(schema = @Schema(implementation = ProductResponse.class)))
+    })
+    @GetMapping("/{categoryId}")
+    ResponseEntity<List<ProductResponse>> getProductsByCategory(@PathVariable UUID categoryId);
 
     @Operation(summary = "Create a new product")
     @ApiResponses(value = {

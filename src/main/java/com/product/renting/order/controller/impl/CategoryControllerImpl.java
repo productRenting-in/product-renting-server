@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class CategoryControllerImpl implements CategoryController {
@@ -19,5 +21,11 @@ public class CategoryControllerImpl implements CategoryController {
     public ResponseEntity<CategoryResponse> addCategory(CategoryRequest categoryRequest) {
         CategoryResponse categoryResponse = categoryService.addCategory(categoryRequest);
         return new ResponseEntity<>(categoryResponse, HttpStatus.CREATED);
+    }
+
+    @Override
+    public ResponseEntity<List<CategoryResponse>> getAll() {
+        List<CategoryResponse> categoryResponses = categoryService.getAll();
+        return new ResponseEntity<>(categoryResponses, HttpStatus.OK);
     }
 }

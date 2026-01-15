@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -58,5 +59,19 @@ public class CategoryDaoImpl implements CategoryDao {
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Category not found for id: " + categoryId)
                 );
+    }
+
+    @Override
+    public Optional<Category> getCategoryById(UUID categoryId) {
+        log.debug("DAO - Fetching category with id {}", categoryId);
+        return categoryRepository.findById(categoryId);
+    }
+
+    @Override
+    public boolean categoryExistsBySlug(String categorySlug) {
+        log.debug("DAO - Checking if category exists with Slug {}", categorySlug);
+        boolean result = categoryRepository.existsByCategorySlugIgnoreCase(categorySlug);
+        log.debug("DAO - Category exists with Slug {} result {}", categorySlug, result);
+        return result;
     }
 }

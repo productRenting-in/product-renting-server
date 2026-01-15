@@ -7,7 +7,8 @@ import com.product.renting.order.enumeration.InventoryReservationType;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.math.BigInteger;
+import java.time.Instant;
 import java.util.UUID;
 
 @Data
@@ -29,14 +30,19 @@ public class InventoryReservation extends Auditable {
     private InventoryItem inventoryItem;
 
     @Column(name = DbConstants.INVENTORY_RESERVATION_FROM_DATE)
-    private LocalDateTime fromDate;
+    private Instant fromDate;
 
     @Column(name = DbConstants.INVENTORY_RESERVATION_TO_DATE)
-    private LocalDateTime toDate;
+    private Instant toDate;
 
+    @Column(name = DbConstants.RESERVED_QUANTITY)
+    private BigInteger reservedQuantity;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = DbConstants.INVENTORY_RESERVATION_TYPE)
     private InventoryReservationType reservationType;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = DbConstants.INVENTORY_RESERVATION_STATUS)
     private InventoryReservationStatus reservationStatus;
 }

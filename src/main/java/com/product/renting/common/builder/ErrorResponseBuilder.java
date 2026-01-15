@@ -6,7 +6,7 @@ import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.context.request.WebRequest;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 public class ErrorResponseBuilder {
@@ -21,7 +21,7 @@ public class ErrorResponseBuilder {
     public static ApiErrorResponse.ApiErrorResponseBuilder createBasicErrorResponse(
             HttpStatus httpStatus, String message, WebRequest request) {
         return ApiErrorResponse.builder()
-                .timestamp(LocalDateTime.now())
+                .timestamp(Instant.now())
                 .statusCode(httpStatus.value())
                 .errorMessage(message)
                 .traceId(MDC.get("requestId"))

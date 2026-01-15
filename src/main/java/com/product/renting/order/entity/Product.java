@@ -2,6 +2,7 @@ package com.product.renting.order.entity;
 
 import com.product.renting.common.constant.DbConstants;
 import com.product.renting.common.entity.Auditable;
+import com.product.renting.order.enumeration.TrackingType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,6 +27,10 @@ public class Product extends Auditable {
 
     @Column(name = DbConstants.PRODUCT_DESCRIPTION)
     private String productDescription;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = DbConstants.TRACKING_TYPE)
+    private TrackingType trackingType;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = DbConstants.CATEGORY_ID)

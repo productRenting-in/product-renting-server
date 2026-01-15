@@ -6,6 +6,7 @@ import com.product.renting.order.enumeration.InventoryItemStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigInteger;
 import java.util.UUID;
 
 @Data
@@ -29,6 +30,10 @@ public class InventoryItem extends Auditable {
     @Column(name = DbConstants.INVENTORY_ITEM_SERIAL_NUMBER)
     private String serialNumber;
 
+    @Column(name = DbConstants.INVENTORY_ITEM_QUANTITY)
+    private BigInteger quantity;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = DbConstants.INVENTORY_ITEM_STATUS)
     private InventoryItemStatus inventoryItemStatus;
 }

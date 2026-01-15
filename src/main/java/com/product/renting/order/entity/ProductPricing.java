@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.UUID;
 
 @Data
@@ -37,9 +37,9 @@ public class ProductPricing extends Auditable {
     private BigDecimal pricePerMonth;
 
     @Column(name = DbConstants.PRODUCT_PRICING_EFFECTIVE_FROM)
-    private LocalDateTime effectiveFrom;
+    private Instant effectiveFrom;
 
     @Column(name = DbConstants.PRODUCT_PRICING_EFFECTIVE_TO)
-    private LocalDateTime effectiveTo;
+    private Instant effectiveTo;
 
 }

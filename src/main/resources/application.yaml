@@ -11,6 +11,7 @@ spring:
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
     hikari:
+      connection-init-sql: SET time_zone='+00:00'
       connection-timeout: 30000
       validation-timeout: 5000
       idle-timeout: 300000

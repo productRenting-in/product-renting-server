@@ -3,6 +3,7 @@ package com.product.renting.order.controller.impl;
 import com.product.renting.order.controller.ProductController;
 import com.product.renting.order.dto.request.ProductRequest;
 import com.product.renting.order.dto.response.ProductResponse;
+import com.product.renting.order.enumeration.TrackingType;
 import com.product.renting.order.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,8 +32,8 @@ public class ProductControllerImpl implements ProductController {
     }
 
     @Override
-    public ResponseEntity<ProductResponse> addProduct(ProductRequest productRequest) {
-        ProductResponse savedProductResponse = productService.addProduct(productRequest);
+    public ResponseEntity<ProductResponse> addProduct(TrackingType trackingType, ProductRequest productRequest) {
+        ProductResponse savedProductResponse = productService.addProduct(trackingType, productRequest);
         return new ResponseEntity<>(savedProductResponse, HttpStatus.OK);
     }
 }

@@ -4,11 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(
         description = "The status of the inventory item",
-        example = "AVAILABLE",
-        allowableValues = {
-                "AVAILABLE",
-                "RENTED"
-        }
+        example = "AVAILABLE"
 )
 public enum InventoryItemStatus {
     AVAILABLE,

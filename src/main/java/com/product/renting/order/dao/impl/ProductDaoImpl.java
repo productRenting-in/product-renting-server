@@ -1,7 +1,9 @@
 package com.product.renting.order.dao.impl;
 
+import com.product.renting.common.exception.DuplicateResourceException;
 import com.product.renting.order.dao.ProductDao;
 import com.product.renting.order.entity.Product;
+import com.product.renting.order.enumeration.TrackingType;
 import com.product.renting.order.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,9 +34,9 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public boolean existsByProductName(String productName) {
-        log.debug("DAO - Checking if product exists by productName {}", productName);
-        return productRepository.existsByProductNameIgnoreCase(productName);
+    public boolean existsByProductNameAndTrackingType(String productName, TrackingType trackingType) {
+        log.debug("DAO - Checking if product exists by productName {} and trackingType {}", productName, trackingType);
+        return productRepository.existsByProductNameIgnoreCaseAndTrackingType(productName, trackingType);
     }
 
     @Override

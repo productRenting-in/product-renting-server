@@ -25,6 +25,7 @@ public interface ProductMapper {
     @Mapping(source = "product.productName", target = "productName")
     @Mapping(source = "product.productDescription", target = "productDescription")
     @Mapping(source = "product.category", target = "category")
+    @Mapping(source = "product.trackingType", target = "trackingType")
     // Map pricing fields from the second parameter
     @Mapping(source = "pricing.pricePerDay", target = "pricePerDay")
     @Mapping(source = "pricing.pricePerWeek", target = "pricePerWeek")

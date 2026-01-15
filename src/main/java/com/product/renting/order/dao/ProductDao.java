@@ -1,6 +1,7 @@
 package com.product.renting.order.dao;
 
 import com.product.renting.order.entity.Product;
+import com.product.renting.order.enumeration.TrackingType;
 
 import java.util.List;
 import java.util.UUID;
@@ -25,7 +26,7 @@ public interface ProductDao {
      */
     Product create(Product product);
 
-    boolean existsByProductName(String productName);
+    boolean existsByProductNameAndTrackingType(String productName, TrackingType trackingType);
 
     Product save(Product product);
 

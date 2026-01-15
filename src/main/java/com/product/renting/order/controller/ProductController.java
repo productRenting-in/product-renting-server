@@ -4,6 +4,7 @@ import com.product.renting.common.constant.ApiEndPoints;
 import com.product.renting.common.controller.BaseController;
 import com.product.renting.order.dto.request.ProductRequest;
 import com.product.renting.order.dto.response.ProductResponse;
+import com.product.renting.order.enumeration.TrackingType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -45,5 +47,7 @@ public interface ProductController extends BaseController {
                     content = @Content(schema = @Schema(implementation = ProductResponse.class)))
     })
     @PostMapping
-    ResponseEntity<ProductResponse> addProduct(@RequestBody @Valid ProductRequest productRequest);
+    ResponseEntity<ProductResponse> addProduct(
+            @RequestParam @NotNull TrackingType trackingType,
+            @RequestBody @Valid ProductRequest productRequest);
 }

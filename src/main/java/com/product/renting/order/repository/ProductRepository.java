@@ -1,6 +1,7 @@
 package com.product.renting.order.repository;
 
 import com.product.renting.order.entity.Product;
+import com.product.renting.order.enumeration.TrackingType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -11,7 +12,7 @@ import java.util.UUID;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, UUID> {
 
-    boolean existsByProductNameIgnoreCase(String productName);
+    boolean existsByProductNameIgnoreCaseAndTrackingType(String productName, TrackingType trackingType);
 
     @Query("""
         SELECT p, pp

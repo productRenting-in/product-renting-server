@@ -4,11 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(
         description = "The type of the inventory reservation",
-        example = "ORDER",
-        allowableValues = {
-                "CART",
-                "ORDER"
-        }
+        example = "ORDER"
 )
 public enum InventoryReservationType {
     CART,

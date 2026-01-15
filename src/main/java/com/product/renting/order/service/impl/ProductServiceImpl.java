@@ -10,6 +10,7 @@ import com.product.renting.order.dto.response.ProductResponse;
 import com.product.renting.order.entity.Category;
 import com.product.renting.order.entity.Product;
 import com.product.renting.order.entity.ProductPricing;
+import com.product.renting.order.enumeration.TrackingType;
 import com.product.renting.order.mapper.ProductMapper;
 import com.product.renting.order.service.ProductService;
 import jakarta.transaction.Transactional;
@@ -61,14 +62,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public ProductResponse addProduct(ProductRequest productRequest) {
+    public ProductResponse addProduct(TrackingType trackingType, ProductRequest productRequest) {
 
         Category category = categoryDao.getCategoryById(productRequest.getCategoryId()).orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + productRequest.getCategoryId()));
-        boolean exists = productDao.existsByProductName(productRequest.getProductName());
+        boolean exists = productDao.existsByProductNameAndTrackingType(productRequest.getProductName(), trackingType);
         if (exists) {
-            throw new DuplicateResourceException("Product already exists with name: " + productRequest.getProductName());
+            throw new DuplicateResourceException("Product already exists with name: " + productRequest.getProductName() + " and tracking Type: " + trackingType);
         }
         Product product = productMapper.toEntity(productRequest);
+        product.setTrackingType(trackingType);
         product.setCategory(category);
 
         // Create ProductPricing entity

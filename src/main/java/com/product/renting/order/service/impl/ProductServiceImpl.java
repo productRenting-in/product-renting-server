@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -76,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
                 .pricePerDay(productRequest.getPricePerDay())
                 .pricePerWeek(productRequest.getPricePerWeek())
                 .pricePerMonth(productRequest.getPricePerMonth())
-                .effectiveFrom(LocalDateTime.now())
+                .effectiveFrom(Instant.now())
                 .effectiveTo(null)
                 .product(product)
                 .build();

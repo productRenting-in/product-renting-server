@@ -8,4 +8,5 @@ public class ApiEndPoints {
 
     public static final String PRODUCT_V1 = API_V1 + "/products";
     public static final String CATEGORY_V1 = API_V1 + "/categories";
+    public static final String INVENTORY_ITEM_V1 = API_V1 + "/inventory-items";
 }

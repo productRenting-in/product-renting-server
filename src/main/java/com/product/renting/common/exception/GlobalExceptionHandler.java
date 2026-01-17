@@ -153,4 +153,26 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+    /**
+     * Handle ValidationException (business validation)
+     */
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<ApiErrorResponse> handleValidationException(
+            ValidationException ex,
+            WebRequest request) {
+
+        setupMDC();
+        log.error("VALIDATION_EXCEPTION : {}", ex.getMessage(), ex);
+
+        ApiErrorResponse errorResponse = ErrorResponseBuilder.createErrorResponse(
+                HttpStatus.BAD_REQUEST,
+                ex.getMessage() != null
+                        ? ex.getMessage()
+                        : ErrorMessageConstants.VALIDATION_ERROR_MESSAGE,
+                request
+        );
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
 }

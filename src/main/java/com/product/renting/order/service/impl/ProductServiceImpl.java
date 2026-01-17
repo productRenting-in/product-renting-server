@@ -62,15 +62,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public ProductResponse addProduct(TrackingType trackingType, ProductRequest productRequest) {
-
+    public ProductResponse addProduct(ProductRequest productRequest) {
+        TrackingType trackingType = productRequest.getTrackingType();
         Category category = categoryDao.getCategoryById(productRequest.getCategoryId()).orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + productRequest.getCategoryId()));
         boolean exists = productDao.existsByProductNameAndTrackingType(productRequest.getProductName(), trackingType);
         if (exists) {
             throw new DuplicateResourceException("Product already exists with name: " + productRequest.getProductName() + " and tracking Type: " + trackingType);
         }
         Product product = productMapper.toEntity(productRequest);
-        product.setTrackingType(trackingType);
         product.setCategory(category);
 
         // Create ProductPricing entity

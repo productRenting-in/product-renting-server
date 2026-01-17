@@ -26,6 +26,9 @@ public class ProductRequest {
 
     private String productDescription;
 
+    @NotBlank(message = "trackingType is required")
+    private TrackingType trackingType;
+
     @DecimalMin(value = "0.0", inclusive = false, message = "Price must be strictly greater than 0")
     private BigDecimal pricePerDay;
     private BigDecimal pricePerWeek;

@@ -1,6 +1,7 @@
 package com.product.renting.order.dao.impl;
 
 import com.product.renting.common.exception.DuplicateResourceException;
+import com.product.renting.common.exception.ResourceNotFoundException;
 import com.product.renting.order.dao.ProductDao;
 import com.product.renting.order.entity.Product;
 import com.product.renting.order.enumeration.TrackingType;
@@ -55,5 +56,15 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public List<Object[]> findByCategoryWithActivePricing(UUID categoryId) {
         return productRepository.findByCategoryWithActivePricing(categoryId);
+    }
+
+    @Override
+    public Product getByIdOrThrow(UUID productId) {
+        log.debug("DAO - Fetching product by id {}", productId);
+        return productRepository.findById(productId)
+                .orElseThrow(() -> {
+                    log.warn("DAO - Product not found for id {}", productId);
+                    return new ResourceNotFoundException("Product not found with id: " + productId);
+                });
     }
 }

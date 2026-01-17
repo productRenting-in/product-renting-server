@@ -13,5 +13,5 @@ public interface ProductService {
 
     List<ProductResponse> getProductsByCategory(UUID categoryId);
 
-    ProductResponse addProduct(TrackingType trackingType, ProductRequest productRequest);
+    ProductResponse addProduct(ProductRequest productRequest);
 }

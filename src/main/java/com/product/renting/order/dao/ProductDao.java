@@ -34,4 +34,6 @@ public interface ProductDao {
     List<Object[]> findAllWithActivePricing();
 
     List<Object[]> findByCategoryWithActivePricing(UUID categoryId);
+
+    Product getByIdOrThrow(UUID productId);
 }

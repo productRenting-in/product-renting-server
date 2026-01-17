@@ -12,6 +12,7 @@ public class DbConstants {
     public static final String PRODUCT_PRICING = "product_pricing";
     public static final String INVENTORY_ITEM = "inventory_item";
     public static final String INVENTORY_RESERVATION = "inventory_reservation";
+    public static final String PRODUCT_SERIAL_COUNTER = "product_serial_counter";
 
     // Column names for category table
     public static final String CATEGORY_ID = "category_id";
@@ -24,6 +25,7 @@ public class DbConstants {
     public static final String PRODUCT_NAME = "product_name";
     public static final String PRODUCT_DESCRIPTION = "product_description";
     public static final String TRACKING_TYPE = "tracking_type";
+    public static final String LAST_SERIAL = "last_serial";
 
     // Column names for product_pricing table
     public static final String PRODUCT_PRICING_ID = "product_pricing_id";

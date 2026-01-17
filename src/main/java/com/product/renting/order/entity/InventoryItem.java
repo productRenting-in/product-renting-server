@@ -23,17 +23,18 @@ public class InventoryItem extends Auditable {
     @Column(name = DbConstants.INVENTORY_ITEM_ID)
     private UUID inventoryItemId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = DbConstants.PRODUCT_ID)
+    @ManyToOne
+    @JoinColumn(name = DbConstants.PRODUCT_ID, updatable = false)
     private Product product;
 
-    @Column(name = DbConstants.INVENTORY_ITEM_SERIAL_NUMBER)
+    @Column(name = DbConstants.INVENTORY_ITEM_SERIAL_NUMBER, updatable = false)
     private String serialNumber;
 
     @Column(name = DbConstants.INVENTORY_ITEM_QUANTITY)
     private BigInteger quantity;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(name = DbConstants.INVENTORY_ITEM_STATUS)
-    private InventoryItemStatus inventoryItemStatus;
+    private InventoryItemStatus inventoryItemStatus = InventoryItemStatus.AVAILABLE;
 }

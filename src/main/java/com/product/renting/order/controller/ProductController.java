@@ -4,7 +4,6 @@ import com.product.renting.common.constant.ApiEndPoints;
 import com.product.renting.common.controller.BaseController;
 import com.product.renting.order.dto.request.ProductRequest;
 import com.product.renting.order.dto.response.ProductResponse;
-import com.product.renting.order.enumeration.TrackingType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -30,7 +29,7 @@ public interface ProductController extends BaseController {
             @ApiResponse(responseCode = "200", description = "Products found",
                     content = @Content(schema = @Schema(implementation = ProductResponse.class)))
     })
-    @GetMapping
+    @GetMapping("/all")
     ResponseEntity<List<ProductResponse>> getAll();
 
     @Operation(summary = "Get all Products By Category")
@@ -38,8 +37,8 @@ public interface ProductController extends BaseController {
             @ApiResponse(responseCode = "200", description = "Products found by category",
                     content = @Content(schema = @Schema(implementation = ProductResponse.class)))
     })
-    @GetMapping("/{categoryId}")
-    ResponseEntity<List<ProductResponse>> getProductsByCategory(@PathVariable UUID categoryId);
+    @GetMapping
+    ResponseEntity<List<ProductResponse>> getProductsByCategory(@RequestParam(value = "categoryId") @NotNull UUID categoryId);
 
     @Operation(summary = "Create a new product")
     @ApiResponses(value = {
@@ -48,6 +47,6 @@ public interface ProductController extends BaseController {
     })
     @PostMapping
     ResponseEntity<ProductResponse> addProduct(
-            @RequestParam @NotNull TrackingType trackingType,
-            @RequestBody @Valid ProductRequest productRequest);
+            @RequestBody @Valid ProductRequest productRequest
+    );
 }

@@ -2,6 +2,7 @@ package com.product.renting.order.dto.request;
 
 import com.product.renting.order.enumeration.InventoryItemStatus;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,5 +27,6 @@ public class UpdateInventoryItemRequest {
      * Required only for BULK tracking
      * Must be > 0
      */
+    @Positive(message = "quantity must be greater than zero")
     private BigInteger quantity;
 }

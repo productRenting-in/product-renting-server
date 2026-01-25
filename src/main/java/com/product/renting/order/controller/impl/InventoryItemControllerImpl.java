@@ -22,9 +22,9 @@ public class InventoryItemControllerImpl implements InventoryItemController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-//    @Override
-//    public ResponseEntity<InventoryItemResponse> update(UpdateInventoryItemRequest request) {
-//        InventoryItemResponse response = inventoryItemService.update(request);
-//        return new ResponseEntity<>(response, HttpStatus.OK);
-//    }
+    @Override
+    public ResponseEntity<InventoryItemResponse> update(UpdateInventoryItemRequest request) {
+        InventoryItemResponse response = inventoryItemService.update(request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

@@ -1,6 +1,7 @@
 package com.product.renting.order.dao;
 
 import com.product.renting.order.entity.InventoryItem;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
@@ -18,4 +19,13 @@ public interface InventoryItemDao {
     InventoryItem create(InventoryItem inventoryItem);
 
     boolean existsByProductId(UUID productId);
+
+    InventoryItem getByIdOrThrow(@NotNull(message = "inventoryItemId is required") UUID inventoryItemId);
+
+    /**
+     * Update an existing inventory item
+     *
+     * @return the updated inventory item
+     */
+    InventoryItem update(InventoryItem existing);
 }

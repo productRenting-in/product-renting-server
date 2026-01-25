@@ -33,13 +33,13 @@ public interface InventoryItemController {
             @RequestBody @Valid CreateInventoryItemRequest request
     );
 
-//    @Operation(summary = "Update an inventory item")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "201", description = "Inventory item updated successfully",
-//                    content = @Content(schema = @Schema(implementation = InventoryItemResponse.class)))
-//    })
-//    @PutMapping
-//    ResponseEntity<InventoryItemResponse> update(
-//            @RequestBody @Valid UpdateInventoryItemRequest request
-//    );
+    @Operation(summary = "Update an inventory item")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Inventory item updated successfully",
+                    content = @Content(schema = @Schema(implementation = InventoryItemResponse.class)))
+    })
+    @PutMapping
+    ResponseEntity<InventoryItemResponse> update(
+            @RequestBody @Valid UpdateInventoryItemRequest request
+    );
 }

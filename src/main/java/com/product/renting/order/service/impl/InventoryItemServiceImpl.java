@@ -9,6 +9,7 @@ import com.product.renting.order.dto.request.UpdateInventoryItemRequest;
 import com.product.renting.order.dto.response.InventoryItemResponse;
 import com.product.renting.order.entity.InventoryItem;
 import com.product.renting.order.entity.Product;
+import com.product.renting.order.enumeration.InventoryItemStatus;
 import com.product.renting.order.enumeration.TrackingType;
 import com.product.renting.order.mapper.InventoryItemMapper;
 import com.product.renting.order.service.InventoryItemService;
@@ -34,7 +35,7 @@ public class InventoryItemServiceImpl implements InventoryItemService {
     public InventoryItemResponse create(CreateInventoryItemRequest request) {
         UUID productId = request.getProductId();
         Product product = productDao.getByIdOrThrow(productId);
-        validateRequest(product, request);
+        validateCreateRequest(product, request);
         InventoryItem inventoryItem = inventoryItemMapper.toCreateEntity(request);
         inventoryItem.setProduct(product);
 
@@ -46,45 +47,84 @@ public class InventoryItemServiceImpl implements InventoryItemService {
         return inventoryItemMapper.toResponse(saved);
     }
 
-    private void validateRequest(Product product, CreateInventoryItemRequest request) {
-        TrackingType trackingType = product.getTrackingType();
-        BigInteger quantity = request.getQuantity();
-
-        switch (trackingType) {
-            case BULK -> {
-                // BULK items require a quantity > 0
-                if (quantity == null) {
-                    log.error("Validation failed: quantity is required for BULK inventory items");
-                    throw new ValidationException("Quantity is required for BULK inventory items");
-                }
-                validateDuplicateStockEntry(request, product.getProductId());
-            }
-            case SERIALIZED -> {
-                // SERIALIZED items must have quantity == 1
-                if (quantity == null) {
-                    request.setQuantity(BigInteger.ONE);
-                    log.debug("Quantity not provided for SERIALIZED item. Defaulting to 1.");
-                } else if (quantity.compareTo(BigInteger.ONE) != 0) {
-                    log.error("Validation failed: quantity must be 1 for SERIALIZED inventory items, provided={}", quantity);
-                    throw new ValidationException("Quantity must be 1 for SERIALIZED inventory items");
-                }
-            }
-            default -> {
-                log.warn("Unknown tracking type: {}", trackingType);
-            }
+    private void validateCreateRequest(Product product, CreateInventoryItemRequest request) {
+        if (product.getTrackingType() == TrackingType.SERIALIZED && request.getQuantity() == null) {
+            request.setQuantity(BigInteger.ONE);
         }
+
+        validateByTrackingType(
+                product.getTrackingType(),
+                request.getQuantity(),
+                true,
+                product.getProductId()
+        );
     }
 
-    private void validateDuplicateStockEntry(CreateInventoryItemRequest request, UUID productId) {
-        if(inventoryItemDao.existsByProductId(productId)) {
-            log.error("BULK inventory stock is already present for product with ID: {}", productId);
-            throw new DuplicateResourceException("BULK inventory stock is already present for product with ID: " + productId);
+    private void validateUpdateRequest(InventoryItem existing, UpdateInventoryItemRequest request) {
+        TrackingType trackingType = existing.getProduct().getTrackingType();
+        InventoryItemStatus newStatus = request.getInventoryItemStatus();
+
+        // BULK items cannot be RENTED or RESERVED
+        if (trackingType == TrackingType.BULK &&
+                (newStatus == InventoryItemStatus.RENTED
+                        || newStatus == InventoryItemStatus.RESERVED)) {
+
+            throw new ValidationException(
+                    "BULK inventory items cannot be marked as RENTED or RESERVED"
+            );
         }
+
+        // Quantity rules
+        if (trackingType == TrackingType.SERIALIZED && request.getQuantity() == null) {
+            request.setQuantity(BigInteger.ONE);
+        }
+
+        validateByTrackingType(
+                trackingType,
+                request.getQuantity(),
+                false,
+                existing.getProduct().getProductId()
+        );
     }
+
+
 
 
     @Override
     public InventoryItemResponse update(UpdateInventoryItemRequest request) {
-        return null;
+        InventoryItem existing = inventoryItemDao.getByIdOrThrow(request.getInventoryItemId());
+        validateUpdateRequest(existing, request);
+        existing.setQuantity(request.getQuantity());
+        existing.setInventoryItemStatus(request.getInventoryItemStatus());
+        InventoryItem saved = inventoryItemDao.update(existing);
+        return inventoryItemMapper.toResponse(saved);
+    }
+
+    private void validateByTrackingType(
+            TrackingType trackingType,
+            BigInteger quantity,
+            boolean checkDuplicate,
+            UUID productId
+    ) {
+        switch (trackingType) {
+            case BULK -> {
+                if (quantity == null) {
+                    throw new ValidationException("Quantity is required for BULK inventory items");
+                }
+                if (checkDuplicate && inventoryItemDao.existsByProductId(productId)) {
+                    throw new DuplicateResourceException(
+                            "BULK inventory stock is already present for product with ID: " + productId
+                    );
+                }
+            }
+
+            case SERIALIZED -> {
+                if (quantity != null && quantity.compareTo(BigInteger.ONE) != 0) {
+                    throw new ValidationException("Quantity must be 1 for SERIALIZED inventory items");
+                }
+            }
+
+            default -> log.warn("Unknown tracking type: {}", trackingType);
+        }
     }
 }
